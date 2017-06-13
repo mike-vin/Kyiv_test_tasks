@@ -5,17 +5,17 @@ import junit.framework.TestCase;
 /**
  * JUnit test case for a CacheMap implementation.
  * <p/>
- * Feel free to add more methods.
+ * Feel free to add more methods//TODO-WARNING: MY TESTs location -> test.java.cachemap.CacheMapImplTest
  */
 public class CacheMap_UnitTest extends TestCase {
-    CacheMap<Integer, String> cache;
-    final static long TIME_TO_LIVE = 1000;
+    private CacheMap<Integer, String> cache;        // made private fields
+    private final static long TIME_TO_LIVE = 1000;
 
     public void setUp() throws Exception {
+        super.setUp();
         Clock.setTime(1000);
 
-        cache = new CacheMapImpl<>(); //TODO instantiate cache object
-
+        cache = new CacheMapImpl<>();
         cache.setTimeToLive(TIME_TO_LIVE);
     }
 
@@ -29,6 +29,7 @@ public class CacheMap_UnitTest extends TestCase {
     }
 
     public void testSize() throws Exception {
+        cache.setTimeToLive(2000);
         assertEquals(0, cache.size());
         cache.put(1, "apple");
         assertEquals(1, cache.size());
@@ -59,19 +60,23 @@ public class CacheMap_UnitTest extends TestCase {
         cache.put(1, "apple");
         assertNotNull(cache.put(1, "banana"));
         Clock.setTime(3000);
-        assertNull(cache.put(1, "mango"));
+        //    assertNull(cache.put(1, "mango")); -- a mistake! (it cant be Null)
+        // correct way->
+        assertNotNull(cache.put(1, "mango"));
+        assertEquals("mango", cache.put(1, "mango"));
+        assertEquals(1, cache.size()); // reWriting (K,V) = (1, "mango")
     }
 
     public void testRemove() throws Exception {
-        assertNull(cache.remove(new Integer(1)));
+        assertNull(cache.remove(1));
 
-        cache.put(new Integer(1), "apple");
+        cache.put(1, "apple");
 
-        assertEquals("apple", cache.remove(new Integer(1)));
+        assertEquals("apple", cache.remove(1));
 
-        assertNull(cache.get(new Integer(1)));
+        assertNull(cache.get(1));
         assertEquals(0, cache.size());
-
+        // i removed all boxing: "new Integer(1)" -> (for easy reading)
     }
 
     public void testContainsKeyAndContainsValue() {

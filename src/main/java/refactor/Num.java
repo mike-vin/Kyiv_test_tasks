@@ -1,14 +1,18 @@
 package refactor;
 
 class Num {
-    private String val;
+    private String number;
 
-    public Num(String x) {
-        this.val = x;
+    public Num(String number) {
+        this.number = number;
     }
 
     public String getNumber() {
-        return val;
+        return number;
     }
 
+    @Override
+    public String toString() {
+        return number;
+    }
 }

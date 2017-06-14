@@ -1,14 +1,13 @@
 package refactor;
 
-public class PhoneNumber {
-	private Num number;
+public class PhoneNumber extends Num {
 
-	public PhoneNumber(String number) {
-		this.number = new Num(number);
-	}
+    public PhoneNumber(String number) {
+        super(number);
+    }
 
-	public String getNumber() {
-		return number.getNumber();
-	}
-	
+    @Override
+    public String toString() {
+        return super.getNumber();
+    }
 }

@@ -2,29 +2,33 @@ package refactor;
 
 import java.util.Date;
 
-public class Person {
-	private String NAME;
-	private PhoneNumber phoneNumber;
-	private Date date;
-	
-	public Person(String name, PhoneNumber phoneNumber) {
-		this.NAME = name;
-	}
+public class Person { // 'POJO'
+    final private String name;
+    final private PhoneNumber phoneNumber;
+    private Date date;
 
-	public String getName() {
-		return NAME;
-	}
+    public Person(String name, PhoneNumber phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
 
-	public void setName(String name) {
-		name = name;
-	}
+    public Person(String NAME, PhoneNumber phoneNumber, Date date) {
+        this(NAME, phoneNumber);
+        this.date = date;
+    }
 
-	public PhoneNumber getPhoneNumber() {
-		return phoneNumber;
-	}
+    public String getName() {
+        return new String(name.getBytes());
+    }
 
-	public void setPhoneNumber(PhoneNumber phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+
+    public PhoneNumber getPhoneNumber() {
+        return new PhoneNumber(phoneNumber.toString());
+    }
+
+
+    public Date getDate() {
+        return new Date(date.getTime());
+    }
 
 }
